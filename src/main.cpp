@@ -18,11 +18,6 @@ int main(int argc, const char* argv[]) {
             execute = true;
         } else {
             for (auto i = 1; i < argc; ++i) {
-                // available flags:
-                // -path [address],
-                // -resize Integer Integer
-                // -noshuffle
-                // -new (hidden flag) shouldn't be used by user
                 if (!strcmp(argv[i], "-path")) {
                     if (i != argc - 1) {
                         ++i;
@@ -63,8 +58,6 @@ int main(int argc, const char* argv[]) {
                     shuffle = false;
                     execute = true;
                 } else if (!strcmp(argv[i], "-new") and (argc == 2)) {
-                    // create a script links to the typon binary in the current
-                    // directory
                     char* real_path = realpath(".", NULL);
                     string typon_sh_path = string(real_path) + "/typon_run.sh";
                     ofstream newtypon(typon_sh_path);
@@ -85,7 +78,6 @@ int main(int argc, const char* argv[]) {
                          real_path + "/typon -path " + real_path + "\nfi");
                     newtypon << run_sh_content;
                     newtypon.close();
-                    // chmod((typon_sh_path).c_str(), S_IWUSR);
                 } else {
                     printf("Typon: undefined flag: %s\n", argv[i]);
                 }
